@@ -4,15 +4,18 @@ function reveal() {
     for (var i = 0; i < reveals.length; i++) {
         var windowHeight = window.innerHeight;
         var elementTop = reveals[i].getBoundingClientRect().top;
-        var elementVisible = 100;
+        var elementVisible = 50; // Reduced for faster trigger
         if (elementTop < windowHeight - elementVisible) {
             reveals[i].classList.add("active");
         }
     }
 }
-window.addEventListener("scroll", reveal);
-// Trigger immediately on load for elements already in view
-reveal();
+
+document.addEventListener("DOMContentLoaded", () => {
+    window.addEventListener("scroll", reveal);
+    // Trigger immediately on load for elements already in view
+    setTimeout(reveal, 100); 
+});
 
 // Basic abstract particle background physics
 const canvas = document.getElementById("particles-bg");
