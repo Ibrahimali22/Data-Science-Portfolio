@@ -386,7 +386,11 @@ footer {
     }
     nav a { font-size: 0.85rem; }
     .nav-btn { padding: 0.4rem 1rem; }
-    .container { padding: 4rem 5%; }
+    .hero { 
+        padding-top: 150px; /* Offset for the mobile nav */
+        height: auto; 
+        min-height: 100vh;
+    }
     .hero h1 { font-size: 3rem; }
     .hero h2 { font-size: 1.5rem; }
     .project-card { padding: 2rem; }
