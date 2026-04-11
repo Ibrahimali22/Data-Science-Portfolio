@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Customer Churn | Ibrahim Ali Case Study</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/black.min.css">
+    <script src="https://cdn.plot.ly/plotly-2.20.0.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --cyan: #4facfe; --bg: #07090f; }
+        body { font-family: 'Outfit', sans-serif; background: var(--bg); color: white; }
+        .reveal h1, .reveal h2 { color: var(--cyan) !important; font-weight: 700; text-transform: uppercase; }
+        .card { background: rgba(21, 25, 33, 0.9); padding: 25px; border-radius: 15px; border-left: 5px solid var(--cyan); margin-top: 20px; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.5em; margin-top: 20px; color: #ccc; }
+        th, td { border: 1px solid #333; padding: 10px; }
+        th { background: var(--cyan); color: white; }
+        .home-btn { position: fixed; bottom: 20px; left: 20px; z-index: 999; background: var(--cyan); color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; }
+        .chart-container { width: 100%; height: 350px; }
+    </style>
+</head>
+<body>
+    <a href="../index.html" class="home-btn">← Back</a>
+    <div class="reveal">
+        <div class="slides">
+            <section>
+                <h2>Business Objective</h2>
+                <div class="card">
+                    <p>"Maximizing <span style="color:var(--cyan)">Customer Lifetime Value (CLV)</span> by identifying churn triggers before they happen."</p>
+                </div>
+            </section>
+            <section>
+                <h2>Key Insights (Risk Table)</h2>
+                <p style="font-size: 0.6em;">Behavioral Correlation Data:</p>
+                <table>
+                    <thead><tr><th>Factor</th><th>Condition</th><th>Churn Probability</th></tr></thead>
+                    <tbody>
+                        <tr><td>Contract</td><td>Month-to-month</td><td>42.7% (Critical)</td></tr>
+                        <tr><td>Internet</td><td>Fiber Optic</td><td>41.8% (High)</td></tr>
+                        <tr><td>Tenure</td><td>< 6 Months</td><td>38.2% (High)</td></tr>
+                    </tbody>
+                </table>
+            </section>
+            <section>
+                <h2>Predictive Methodology</h2>
+                <div class="card">
+                    <h4>Gradient Boosting Power</h4>
+                    <p style="font-size: 0.8em;">Developed an XGBoost classifier with 85% F1-Score, identifying non-linear patterns in service ticket volume and pricing sensitivity.</p>
+                </div>
+            </section>
+            <section>
+                <h2>Churn Segments (Live)</h2>
+                <div id="churn_chart" class="chart-container"></div>
+            </section>
+            <section>
+                <h2>Model Performance</h2>
+                <div class="card" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div style="text-align: center;">
+                        <h3 style="margin:0; color:var(--cyan)">0.91</h3>
+                        <p style="font-size: 0.5em;">AUC-ROC Score</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <h3 style="margin:0; color:var(--cyan)">88.4%</h3>
+                        <p style="font-size: 0.5em;">Overall Accuracy</p>
+                    </div>
+                </div>
+                <div class="card" style="margin-top: 15px; font-size: 0.6em;">
+                    <b>Validated via:</b> 5-Fold Cross Validation to ensure generalized performance on unseen customer cohorts.
+                </div>
+            </section>
+            <section>
+                <h2>ROI & Recommendations</h2>
+                <div class="card">
+                    <p style="font-size: 1.1em; color: var(--cyan);">Strategy Overhaul</p>
+                    <p style="font-size: 0.8em;">Recommend targeted 2-year contract migration incentives. Estimated ROI: <span style="color:var(--cyan)">15% reduction</span> in annualized churn loss.</p>
+                </div>
+            </section>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.js"></script>
+    <script>
+        Reveal.initialize({ hash: true, transition: 'slide' });
+        Reveal.on('ready', () => {
+            Plotly.newPlot('churn_chart', [{
+                values: [55, 25, 20], labels: ['Month-to-Month', 'One Year', 'Two Year'],
+                type: 'pie', hole: 0.4, marker: {colors: ['#4facfe', '#00f2fe', '#ffffff']}
+            }], { paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)', font: {color: '#888'}, margin: {t: 20, b: 30, l: 20, r: 20} });
+        });
+    </script>
+</body>
+</html>

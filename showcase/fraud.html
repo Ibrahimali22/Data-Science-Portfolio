@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Fraud Detection | Ibrahim Ali Case Study</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/black.min.css">
+    <script src="https://cdn.plot.ly/plotly-2.20.0.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --cyan: #ff0055; --bg: #07090f; }
+        body { font-family: 'Outfit', sans-serif; background: var(--bg); color: white; }
+        .reveal h1, .reveal h2 { color: var(--cyan) !important; font-weight: 700; text-transform: uppercase; }
+        .card { background: rgba(21, 25, 33, 0.9); padding: 25px; border-radius: 15px; border-left: 5px solid var(--cyan); margin-top: 20px; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.5em; margin-top: 20px; color: #ccc; }
+        th, td { border: 1px solid #333; padding: 10px; }
+        th { background: var(--cyan); color: white; }
+        .home-btn { position: fixed; bottom: 20px; left: 20px; z-index: 999; background: var(--cyan); color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; }
+        .chart-container { width: 100%; height: 350px; }
+    </style>
+</head>
+<body>
+    <a href="../index.html" class="home-btn">← Back</a>
+    <div class="reveal">
+        <div class="slides">
+            <section>
+                <h2>The Challenge</h2>
+                <div class="card">
+                    <p>"Financial Fraud represents only <span style="color:var(--cyan)">0.17%</span> of total records. Standard metrics fail; high precision and recall balance is required."</p>
+                </div>
+            </section>
+            <section>
+                <h2>Preprocessing Pipeline</h2>
+                <p style="font-size: 0.6em;">Technical Strategy Breakdown:</p>
+                <table>
+                    <thead><tr><th>Technique</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td>SMOTE</td><td>Synthetic Minority Over-sampling to balance classes</td></tr>
+                        <tr><td>StandardScaler</td><td>Normalizing high-variance financial features (Amount, Time)</td></tr>
+                        <tr><td>Stratification</td><td>Ensuring equal distribution in Train/Test splits</td></tr>
+                    </tbody>
+                </table>
+            </section>
+            <section>
+                <h2>Hybrid Architecture</h2>
+                <div class="card" style="text-align: center;">
+                    <h4 style="color:var(--cyan)">Isolation Forest (Anomaly)</h4>
+                    <p>+</p>
+                    <h4 style="color:var(--cyan)">Random Forest (Classification)</h4>
+                </div>
+                <p style="font-size: 0.6em; color: #888;">Multi-path validation for detecting both novel and known fraud patterns.</p>
+            </section>
+            <section>
+                <h2>Feature Importance (Live)</h2>
+                <div id="fraud_chart" class="chart-container"></div>
+            </section>
+            <section>
+                <h2>Model Evaluation</h2>
+                <div style="display: flex; gap: 15px;">
+                    <div class="card" style="flex: 1; text-align: center;">
+                        <h1 style="font-size: 1.5em; margin:0;">0.94</h1>
+                        <p style="font-size: 0.5em; color: var(--cyan);">F1-Score</p>
+                    </div>
+                    <div class="card" style="flex: 1; text-align: center;">
+                        <h1 style="font-size: 1.5em; margin:0;">96%</h1>
+                        <p style="font-size: 0.5em; color: var(--cyan);">Precision</p>
+                    </div>
+                    <div class="card" style="flex: 1; text-align: center;">
+                        <h1 style="font-size: 1.5em; margin:0;">92%</h1>
+                        <p style="font-size: 0.5em; color: var(--cyan);">Recall</p>
+                    </div>
+                </div>
+                <p style="font-size: 0.5em; color: #888; margin-top: 20px;">*Achieved optimal balance for imbalanced financial data using SMOTE + Random Forest.</p>
+            </section>
+            <section>
+                <h2>Security Value</h2>
+                <div class="card">
+                    <p style="font-size: 1.1em; color: var(--cyan);">Explainability & Trust (XAI)</p>
+                    <p style="font-size: 0.8em;">Full SHAP interpretability ensures that every rejected transaction has a clear audit trail for compliance and human-in-the-loop review.</p>
+                </div>
+            </section>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.js"></script>
+    <script>
+        Reveal.initialize({ hash: true, transition: 'slide' });
+        Reveal.on('ready', () => {
+            Plotly.newPlot('fraud_chart', [{
+                x: [0.42, 0.38, 0.35, 0.28, 0.15], y: ['V14', 'V12', 'V17', 'V10', 'Amount'],
+                type: 'bar', orientation: 'h', marker: {color: '#ff0055'}
+            }], { paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)', font: {color: '#888'}, margin: {t: 20, b: 30, l: 60, r: 20} });
+        });
+    </script>
+</body>
+</html>

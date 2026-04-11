@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Ibrahim Ali | Technical Showcase</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/black.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cyan: #00f2fe;
+            --blue: #4facfe;
+            --bg-dark: #07090f;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-dark);
+        }
+
+        .reveal {
+            background: var(--bg-dark);
+        }
+
+        .reveal h1,
+        .reveal h2,
+        .reveal h3 {
+            color: var(--cyan) !important;
+            text-shadow: 0 0 15px rgba(0, 242, 254, 0.6);
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .reveal section {
+            text-align: left;
+        }
+
+        .card {
+            background: rgba(21, 25, 33, 0.9);
+            padding: 35px;
+            border-radius: 20px;
+            border-left: 6px solid var(--cyan);
+            backdrop-filter: blur(15px);
+            margin-top: 25px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+        }
+
+        .highlight {
+            color: var(--cyan);
+            font-weight: bold;
+        }
+
+        .home-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            z-index: 999;
+            background: var(--cyan);
+            color: black;
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            box-shadow: 0 0 15px var(--cyan);
+        }
+
+        .stat-box {
+            display: inline-block;
+            background: var(--blue);
+            color: black;
+            padding: 5px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="../index.html" class="home-btn">← Home</a>
+    <div class="reveal">
+        <div class="slides">
+            <section data-background-color="#07090f">
+                <div style="text-align: center;">
+                    <h1 style="font-size: 3em;">TECHNICAL SHOWCASE</h1>
+                    <p style="color: #888;">Advanced Analytics Portfolio | Ibrahim Ali</p>
+                    <div style="margin-top: 50px;" class="fragment fade-up">
+                        <p>Nav with Arrows | Press Space </p>
+                    </div>
+                </div>
+            </section>
+            <!-- RETAIL -->
+            <section>
+                <section>
+                    <h2>1. Retail Warehouse</h2>
+                    <div class="card">
+                        <h3>Problem</h3>
+                        <p>"Flat files hinder analysis. Normalization for real-time MoM growth is key."</p>
+                    </div>
+                </section>
+                <section>
+                    <h3>SQL Logic (MoM Growth)</h3>
+                    <pre><code class="sql">SELECT Month, ROUND(((MonthlyRev - LAG(MonthlyRev) OVER (ORDER BY Month)) / LAG(MonthlyRev) OVER (ORDER BY Month)) * 100, 2) FROM Performance;</code></pre>
+                </section>
+                <section>
+                    <h3>Value</h3>
+                    <div class="card">
+                        <p>"Automated dashboarding reducing reporting time from hours to seconds."</p>
+                    </div>
+                </section>
+            </section>
+            <!-- FRAUD -->
+            <section>
+                <section>
+                    <h2>2. Fraud Detection</h2>
+                    <div class="card">
+                        <h3>The Challenge</h3>
+                        <p>"Imbalanced Data (0.17% Fraud). Accuracy is not enough; Recall is priority."</p>
+                    </div>
+                </section>
+                <section>
+                    <h3>Preprocessing</h3>
+                    <p>Leveraging <span class="stat-box">SMOTE</span> for class correction and <span
+                            class="stat-box">StandardScaler</span> for normalization.</p>
+                </section>
+                <section>
+                    <h3>Hybrid Architecture</h3>
+                    <div class="card">
+                        <p>Isolation Forest for Anomaly Discovery + Random Forest for precise Classification.</p>
+                    </div>
+                </section>
+            </section>
+            <!-- CHURN -->
+            <section>
+                <section>
+                    <h2>3. Customer Churn</h2>
+                    <div class="card">
+                        <h3>Strategy</h3>
+                        <p>"Predicting at-risk segments to optimize retention marketing spend."</p>
+                    </div>
+                </section>
+                <section>
+                    <h3>Key Insight</h3>
+                    <div class="card">
+                        <p>"Month-to-month contracts are 4x more likely to churn than long-term alternatives."</p>
+                    </div>
+                </section>
+                <section>
+                    <h3>Prediction Engine</h3>
+                    <p>Utilizing <span class="highlight">Gradient Boosting</span> with 85% F1-score for churn targets.
+                    </p>
+                </section>
+            </section>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/highlight/highlight.min.js"></script>
+    <script>Reveal.initialize({ hash: true, plugins: [RevealHighlight], transition: 'convex' });</script>
+</body>
+
+</html>

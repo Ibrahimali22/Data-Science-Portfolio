@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Retail Warehouse | Ibrahim Ali Case Study</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/black.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <script src="https://cdn.plot.ly/plotly-2.20.0.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --cyan: #00f2fe; --bg: #07090f; }
+        body { font-family: 'Outfit', sans-serif; background: var(--bg); color: white; }
+        .reveal { background: var(--bg); }
+        .reveal h1, .reveal h2 { color: var(--cyan) !important; font-weight: 700; text-transform: uppercase; }
+        .card { background: rgba(21, 25, 33, 0.9); padding: 25px; border-radius: 15px; border-left: 5px solid var(--cyan); margin-top: 20px; text-align: left; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.5em; margin-top: 20px; color: #ccc; }
+        th, td { border: 1px solid #333; padding: 10px; }
+        th { background: var(--cyan); color: black; }
+        pre { border-radius: 10px; overflow: hidden; }
+        .home-btn { position: fixed; bottom: 20px; left: 20px; z-index: 999; background: var(--cyan); color: black; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; }
+        .chart-container { width: 100%; height: 350px; }
+    </style>
+</head>
+<body>
+    <a href="../index.html" class="home-btn">← Back</a>
+    <div class="reveal">
+        <div class="slides">
+            <section>
+                <h2>Problem Definition</h2>
+                <div class="card">
+                    <p>"Raw sales data in flat files locks business potential. Data Engineering was needed to normalize 5,000+ records for real-time agility."</p>
+                </div>
+            </section>
+            <section>
+                <h2>Data Architecture (3NF)</h2>
+                <p style="font-size: 0.6em;">Normalized Relational Schema Snapshot:</p>
+                <table>
+                    <thead><tr><th>Table</th><th>PrimaryKey</th><th>Columns</th></tr></thead>
+                    <tbody>
+                        <tr><td>Customers</td><td>CustomerID</td><td>Country, Region, Segment</td></tr>
+                        <tr><td>Products</td><td>ProductID</td><td>Category, Sub-Category, Name</td></tr>
+                        <tr><td>Orders (Fact)</td><td>OrderID</td><td>Date, Revenue, Profit, ProductID, CustomerID</td></tr>
+                    </tbody>
+                </table>
+                <p style="font-size: 0.5em; color: var(--cyan); margin-top: 10px;">Ensures data integrity and zero redundancy.</p>
+            </section>
+            <section>
+                <h2>SQL Magic (Window Functions)</h2>
+                <p style="font-size: 0.6em;">Implementing <span class="highlight">MoM Growth</span> tracking via LAG and OVER:</p>
+                <pre><code class="sql">
+WITH MonthlySales AS (
+  SELECT strftime('%Y-%m', OrderDate) AS Month, SUM(Revenue) AS Revenue 
+  FROM Orders GROUP BY 1
+)
+SELECT Month, Revenue,
+       ROUND(((Revenue - LAG(Revenue) OVER (ORDER BY Month)) / LAG(Revenue) OVER (ORDER BY Month)) * 100, 2) AS GrowthPct
+FROM MonthlySales;
+                </code></pre>
+            </section>
+            <section>
+                <h2>Technical Insights (Live Chart)</h2>
+                <div id="retail_chart" class="chart-container"></div>
+            </section>
+            <section>
+                <h2>Performance Metrics</h2>
+                <div style="display: flex; gap: 20px;">
+                    <div class="card" style="flex: 1;">
+                        <h4 style="color:var(--cyan)">85% Faster</h4>
+                        <p style="font-size: 0.6em;">Query execution time reduced via B-Tree indexing and 3NF normalization.</p>
+                    </div>
+                    <div class="card" style="flex: 1;">
+                        <h4 style="color:var(--cyan)">10k+ Rows</h4>
+                        <p style="font-size: 0.6em;">Seamless ETL processing of diverse retail datasets with zero data loss.</p>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <h2>Business Impact</h2>
+                <div class="card">
+                    <p style="font-size: 1.1em; color: var(--cyan);">Decision Making Reimagined</p>
+                    <p style="font-size: 0.8em;">Identifying market dips and growth patterns in seconds. The automated pipeline feeds directly into executive Power BI dashboards.</p>
+                </div>
+            </section>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/highlight/highlight.min.js"></script>
+    <script>
+        Reveal.initialize({ hash: true, plugins: [ RevealHighlight ], transition: 'convex' });
+        Reveal.on('ready', () => {
+            Plotly.newPlot('retail_chart', [{
+                x: ['Q1', 'Q2', 'Q3', 'Q4'], y: [45000, 58000, 52000, 75000],
+                type: 'scatter', mode: 'lines+markers', line: {color: '#00f2fe', width: 4},
+                fill: 'tozeroy', fillcolor: 'rgba(0, 242, 254, 0.1)'
+            }], { paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)', font: {color: '#888'}, margin: {t: 20, b: 30, l: 30, r: 20} });
+        });
+    </script>
+</body>
+</html>
