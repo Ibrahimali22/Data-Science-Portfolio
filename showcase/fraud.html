@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/black.min.css">
     <script src="https://cdn.plot.ly/plotly-2.20.0.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/highlight/monokai.min.css">
     <style>
         :root { --cyan: #ff0055; --bg: #07090f; }
         body { font-family: 'Outfit', sans-serif; background: var(--bg); color: white; }
@@ -18,6 +20,10 @@
         th { background: var(--cyan); color: white; }
         .home-btn { position: fixed; bottom: 20px; left: 20px; z-index: 999; background: var(--cyan); color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; }
         .chart-container { width: 100%; height: 350px; }
+        .tech-icon { font-size: 2em; margin: 10px; color: var(--cyan); }
+        .btn-github { background: #24292e; color: white; padding: 15px 30px; border-radius: 30px; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; margin-top: 20px; transition: 0.3s; }
+        .btn-pbi { background: #ff0055; color: white; padding: 15px 30px; border-radius: 30px; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; margin-top: 20px; transition: 0.3s; font-weight: bold; border: none; font-family: inherit; }
+        .btn-pbi:hover { opacity: 0.8; transform: translateY(-3px); }
     </style>
 </head>
 <body>
@@ -28,6 +34,23 @@
                 <h2>The Challenge</h2>
                 <div class="card">
                     <p>"Financial Fraud represents only <span style="color:var(--cyan)">0.17%</span> of total records. Standard metrics fail; high precision and recall balance is required."</p>
+                </div>
+            </section>
+            <section>
+                <h2>Tech Stack</h2>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-top: 30px;">
+                    <div class="card" style="text-align: center;">
+                        <i class="fab fa-python tech-icon"></i>
+                        <p>Python / Pandas</p>
+                    </div>
+                    <div class="card" style="text-align: center;">
+                        <i class="fas fa-brain tech-icon"></i>
+                        <p>Scikit-Learn</p>
+                    </div>
+                    <div class="card" style="text-align: center;">
+                        <i class="fas fa-chart-line tech-icon"></i>
+                        <p>Plotly / XAI</p>
+                    </div>
                 </div>
             </section>
             <section>
@@ -46,10 +69,27 @@
                 <h2>Hybrid Architecture</h2>
                 <div class="card" style="text-align: center;">
                     <h4 style="color:var(--cyan)">Isolation Forest (Anomaly)</h4>
-                    <p>+</p>
+                    <span style="font-size:0.5em;">Unsupervised - Detects Novel Patterns</span>
+                    <p style="margin:5px 0;">+</p>
                     <h4 style="color:var(--cyan)">Random Forest (Classification)</h4>
+                    <span style="font-size:0.5em;">Supervised - Targets Known Fraud</span>
                 </div>
-                <p style="font-size: 0.6em; color: #888;">Multi-path validation for detecting both novel and known fraud patterns.</p>
+                <p style="font-size: 0.6em; color: #888;">Multi-path validation satisfies enterprise requirements for spotting both evolving threats and historical fraudulent signatures.</p>
+            </section>
+            <section>
+                <h2>Technical Deep Dive</h2>
+                <p style="font-size: 0.5em;">Hybrid Model Initialization Logic:</p>
+                <pre><code class="python" data-trim>
+# Define the Hybrid Strategy
+anomaly_detector = IsolationForest(contamination=0.01)
+classifier = RandomForestClassifier(n_estimators=100)
+
+# Implementation Logic
+def predict_fraud(data):
+    is_anomaly = anomaly_detector.predict(data)
+    prob = classifier.predict_proba(data)
+    return combine_scores(is_anomaly, prob)
+                </code></pre>
             </section>
             <section>
                 <h2>Feature Importance (Live)</h2>
@@ -80,11 +120,27 @@
                     <p style="font-size: 0.8em;">Full SHAP interpretability ensures that every rejected transaction has a clear audit trail for compliance and human-in-the-loop review.</p>
                 </div>
             </section>
+            <section>
+                <h2>Lessons Learned</h2>
+                <div class="card">
+                    <p style="color: var(--cyan);">Challenge: The "Needle in a Haystack" Problem</p>
+                    <p style="font-size: 0.7em;">Standard Accuracy was 99% simply by predicting "No Fraud". Overcame this by using <b>SMOTE</b> and focusing on the <b>Precision-Recall Curve</b> rather than Accuracy scores.</p>
+                </div>
+                <div style="display: flex; gap: 10px; justify-content: center;">
+                    <a href="https://github.com/Ibrahimali22/Fraud-Detection-ML-System" target="_blank" class="btn-github">
+                        <i class="fab fa-github"></i> Source Code
+                    </a>
+                    <a href="https://fraud-detection-ml-system-ibrahimali22.streamlit.app" target="_blank" class="btn-pbi" style="background: #ff0055; color: white;">
+                        <i class="fas fa-desktop"></i> View Dashboard
+                    </a>
+                </div>
+            </section>
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/highlight/highlight.min.js"></script>
     <script>
-        Reveal.initialize({ hash: true, transition: 'slide' });
+        Reveal.initialize({ hash: true, transition: 'convex', plugins: [ RevealHighlight ] });
         Reveal.on('ready', () => {
             Plotly.newPlot('fraud_chart', [{
                 x: [0.42, 0.38, 0.35, 0.28, 0.15], y: ['V14', 'V12', 'V17', 'V10', 'Amount'],

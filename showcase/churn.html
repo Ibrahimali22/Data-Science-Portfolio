@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/black.min.css">
     <script src="https://cdn.plot.ly/plotly-2.20.0.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root { --cyan: #4facfe; --bg: #07090f; }
         body { font-family: 'Outfit', sans-serif; background: var(--bg); color: white; }
@@ -16,8 +17,15 @@
         table { width: 100%; border-collapse: collapse; font-size: 0.5em; margin-top: 20px; color: #ccc; }
         th, td { border: 1px solid #333; padding: 10px; }
         th { background: var(--cyan); color: white; }
-        .home-btn { position: fixed; bottom: 20px; left: 20px; z-index: 999; background: var(--cyan); color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; }
+        .btn-github { background: #24292e; color: white; padding: 15px 30px; border-radius: 30px; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; margin-top: 20px; transition: 0.3s; }
+        .btn-pbi { background: #4facfe; color: white; padding: 15px 30px; border-radius: 30px; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; margin-top: 20px; transition: 0.3s; font-weight: bold; border: none; font-family: inherit; }
+        .btn-pbi:hover { opacity: 0.8; transform: translateY(-3px); }
+        .home-btn { position: fixed; bottom: 20px; left: 20px; z-index: 1000; background: var(--cyan); color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; }
         .chart-container { width: 100%; height: 350px; }
+        .tech-icon { font-size: 2em; margin: 10px; color: var(--cyan); }
+        .sim-btn { background: rgba(255,255,255,0.1); border: 1px solid var(--cyan); color: white; padding: 10px; border-radius: 5px; cursor: pointer; transition: 0.3s; }
+        .sim-btn.active { background: var(--cyan); color: black; }
+        #risk_display { font-size: 2em; font-weight: bold; margin-top: 20px; }
     </style>
 </head>
 <body>
@@ -28,6 +36,23 @@
                 <h2>Business Objective</h2>
                 <div class="card">
                     <p>"Maximizing <span style="color:var(--cyan)">Customer Lifetime Value (CLV)</span> by identifying churn triggers before they happen."</p>
+                </div>
+            </section>
+            <section>
+                <h2>Tech Stack</h2>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-top: 30px;">
+                    <div class="card" style="text-align: center;">
+                        <i class="fas fa-rocket tech-icon"></i>
+                        <p>XGBoost</p>
+                    </div>
+                    <div class="card" style="text-align: center;">
+                        <i class="fas fa-magnifying-glass tech-icon"></i>
+                        <p>SHAP / XAI</p>
+                    </div>
+                    <div class="card" style="text-align: center;">
+                        <i class="fab fa-python tech-icon"></i>
+                        <p>Pandas / Plotly</p>
+                    </div>
                 </div>
             </section>
             <section>
@@ -54,6 +79,17 @@
                 <div id="churn_chart" class="chart-container"></div>
             </section>
             <section>
+                <h2>Risk Simulator</h2>
+                <p style="font-size: 0.5em;">Select a contract type to see predicted churn risk:</p>
+                <div style="display: flex; gap: 10px; justify-content: center; margin-top: 20px;">
+                    <button class="sim-btn" onclick="updateRisk('Month-to-month', 0.43, this)">Month-to-Month</button>
+                    <button class="sim-btn" onclick="updateRisk('One year', 0.11, this)">One Year</button>
+                    <button class="sim-btn" onclick="updateRisk('Two year', 0.03, this)">Two Year</button>
+                </div>
+                <div id="risk_display"><span id="risk_val">--</span>%</div>
+                <p id="risk_label" style="font-size: 0.6em; color: #888;">Select a scenario above</p>
+            </section>
+            <section>
                 <h2>Model Performance</h2>
                 <div class="card" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
                     <div style="text-align: center;">
@@ -72,15 +108,44 @@
             <section>
                 <h2>ROI & Recommendations</h2>
                 <div class="card">
-                    <p style="font-size: 1.1em; color: var(--cyan);">Strategy Overhaul</p>
-                    <p style="font-size: 0.8em;">Recommend targeted 2-year contract migration incentives. Estimated ROI: <span style="color:var(--cyan)">15% reduction</span> in annualized churn loss.</p>
+                    <p style="font-size: 1.1em; color: var(--cyan);">Actionable Business Strategy</p>
+                    <p style="font-size: 0.8em;">Data showed <span style="color:var(--cyan)">Month-to-month</span> contracts are 4x more likely to churn. Recommended a 12% discount for 2-year migration. Estimated ROI: <span style="color:var(--cyan)">15% reduction</span> in churn loss.</p>
+                </div>
+            </section>
+            <section>
+                <h2>Lessons Learned</h2>
+                <div class="card">
+                    <p style="color: var(--cyan);">Challenge: Correlation != Causation</p>
+                    <p style="font-size: 0.7em;">Standard metrics showed high churn for Fiber Optic users. <b>SHAP</b> analysis revealed the true cause: higher price points and lack of tech support integration, not the technology itself.</p>
+                </div>
+                <div style="display: flex; gap: 10px; justify-content: center;">
+                    <a href="https://github.com/Ibrahimali22/Customer-Churn-XAI-App" target="_blank" class="btn-github">
+                        <i class="fab fa-github"></i> Source Code
+                    </a>
+                    <a href="https://customer-churn-xai-app-ibrahimali22.streamlit.app" target="_blank" class="btn-pbi" style="background: #4facfe; color: white;">
+                        <i class="fas fa-desktop"></i> View Dashboard
+                    </a>
                 </div>
             </section>
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/highlight/highlight.min.js"></script>
     <script>
-        Reveal.initialize({ hash: true, transition: 'slide' });
+        Reveal.initialize({ hash: true, plugins: [ RevealHighlight ], transition: 'convex' });
+        
+        function updateRisk(type, val, btn) {
+            document.querySelectorAll('.sim-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            let riskVal = document.getElementById('risk_val');
+            let riskDisplay = document.getElementById('risk_display');
+            let riskLabel = document.getElementById('risk_label');
+            
+            riskVal.innerText = (val * 100).toFixed(1);
+            riskDisplay.style.color = val > 0.3 ? '#ff0055' : (val > 0.1 ? '#f1c40f' : '#2ecc71');
+            riskLabel.innerText = val > 0.3 ? 'Critical Risk - Action Required' : 'Sustainable Risk Level';
+        }
+
         Reveal.on('ready', () => {
             Plotly.newPlot('churn_chart', [{
                 values: [55, 25, 20], labels: ['Month-to-Month', 'One Year', 'Two Year'],

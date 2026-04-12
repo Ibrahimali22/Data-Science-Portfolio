@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
     <script src="https://cdn.plot.ly/plotly-2.20.0.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root { --cyan: #00f2fe; --bg: #07090f; }
         body { font-family: 'Outfit', sans-serif; background: var(--bg); color: white; }
@@ -21,6 +22,11 @@
         pre { border-radius: 10px; overflow: hidden; }
         .home-btn { position: fixed; bottom: 20px; left: 20px; z-index: 999; background: var(--cyan); color: black; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; }
         .chart-container { width: 100%; height: 350px; }
+        .tech-icon { font-size: 2em; margin: 10px; color: var(--cyan); }
+        .btn-github { background: #24292e; color: white; padding: 15px 30px; border-radius: 30px; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; margin-top: 20px; transition: 0.3s; }
+        .btn-github:hover { background: #444; transform: translateY(-3px); }
+        .btn-pbi { background: #f2c811; color: black; padding: 15px 30px; border-radius: 30px; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; margin-top: 20px; transition: 0.3s; font-weight: bold; }
+        .btn-pbi:hover { background: #ffd93d; transform: translateY(-3px); }
     </style>
 </head>
 <body>
@@ -30,7 +36,24 @@
             <section>
                 <h2>Problem Definition</h2>
                 <div class="card">
-                    <p>"Raw sales data in flat files locks business potential. Data Engineering was needed to normalize 5,000+ records for real-time agility."</p>
+                    <p>"Raw sales data in flat files locks business potential. Data Engineering was needed to normalize 70,000+ records for real-time agility."</p>
+                </div>
+            </section>
+            <section>
+                <h2>Tech Stack</h2>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-top: 30px;">
+                    <div class="card" style="text-align: center;">
+                        <i class="fas fa-database tech-icon"></i>
+                        <p>SQLite / 3NF</p>
+                    </div>
+                    <div class="card" style="text-align: center;">
+                        <i class="fab fa-python tech-icon"></i>
+                        <p>ETL / Pandas</p>
+                    </div>
+                    <div class="card" style="text-align: center;">
+                        <i class="fas fa-chart-pie tech-icon"></i>
+                        <p>Power BI</p>
+                    </div>
                 </div>
             </section>
             <section>
@@ -68,11 +91,11 @@ FROM MonthlySales;
                 <div style="display: flex; gap: 20px;">
                     <div class="card" style="flex: 1;">
                         <h4 style="color:var(--cyan)">85% Faster</h4>
-                        <p style="font-size: 0.6em;">Query execution time reduced via B-Tree indexing and 3NF normalization.</p>
+                        <p style="font-size: 0.6em;">Optimized query performance via B-Tree indexing and 3NF normalization on high-volume datasets.</p>
                     </div>
                     <div class="card" style="flex: 1;">
-                        <h4 style="color:var(--cyan)">10k+ Rows</h4>
-                        <p style="font-size: 0.6em;">Seamless ETL processing of diverse retail datasets with zero data loss.</p>
+                        <h4 style="color:var(--cyan)">70k+ Rows</h4>
+                        <p style="font-size: 0.6em;">Seamless end-to-end ETL processing of massive sales histories with zero data loss.</p>
                     </div>
                 </div>
             </section>
@@ -81,6 +104,21 @@ FROM MonthlySales;
                 <div class="card">
                     <p style="font-size: 1.1em; color: var(--cyan);">Decision Making Reimagined</p>
                     <p style="font-size: 0.8em;">Identifying market dips and growth patterns in seconds. The automated pipeline feeds directly into executive Power BI dashboards.</p>
+                </div>
+            </section>
+            <section>
+                <h2>Lessons Learned</h2>
+                <div class="card">
+                    <p style="color: var(--cyan);">Challenge: Handling Dynamic Schemas</p>
+                    <p style="font-size: 0.7em;">E-commerce data often arrives with missing headers or inconsistent types. Solved this by building a <b>Validation Layer</b> in Python that cleans and enforces 3NF rules before SQL ingestion.</p>
+                </div>
+                <div style="display: flex; gap: 10px; justify-content: center;">
+                    <a href="https://github.com/Ibrahimali22/DataWarehouse-SQL-ETL" target="_blank" class="btn-github">
+                        <i class="fab fa-github"></i> Source Code
+                    </a>
+                    <a href="https://datawarehouse-sql-etl-ibrahimali22.streamlit.app" target="_blank" class="btn-pbi">
+                        <i class="fas fa-desktop"></i> View Dashboard
+                    </a>
                 </div>
             </section>
         </div>
