@@ -78,3 +78,26 @@ window.addEventListener('resize', () => {
 
 init();
 animate();
+
+// --- Certificate Modal Logic ---
+function openModal(imageSrc) {
+    const modal = document.getElementById("certModal");
+    const modalImg = document.getElementById("certImage");
+    modal.style.display = "block";
+    modalImg.src = imageSrc;
+    document.body.style.overflow = "hidden"; // Prevent scrolling behind
+}
+
+function closeModal() {
+    const modal = document.getElementById("certModal");
+    modal.style.display = "none";
+    document.body.style.overflow = "auto";
+}
+
+// Close modal if clicked outside the image
+window.onclick = function(event) {
+    const modal = document.getElementById("certModal");
+    if (event.target == modal) {
+        closeModal();
+    }
+}
