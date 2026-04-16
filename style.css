@@ -208,6 +208,26 @@ nav a:hover {
     box-shadow: 0 0 30px rgba(255, 0, 85, 0.7);
 }
 
+.secondary-btn {
+    border: 1px solid var(--primary-neon);
+    color: var(--primary-neon) !important;
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-block;
+    transition: 0.3s;
+    margin-left: 1rem;
+    background: transparent;
+}
+
+.secondary-btn:hover {
+    background: var(--primary-neon);
+    color: var(--bg-dark) !important;
+    transform: translateY(-3px);
+    box-shadow: 0 0 20px rgba(0, 242, 254, 0.4);
+}
+
 .highlight-link {
     color: var(--primary-neon) !important;
     border: 1px solid var(--primary-neon);
